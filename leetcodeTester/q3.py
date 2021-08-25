@@ -21,6 +21,8 @@ class Solution:
         # Moving sub-array problem. We use a second array to store the current, and a maxLength counter which is
         # recalculated when the current is increased. No further variables are required
         maxLength = 0
+
+        # Its possible a dict would be faster runtime than an array
         currentSubstring  = []
 
 
@@ -29,10 +31,11 @@ class Solution:
                 # If the element doesn't already exist, add it and recalc max length
                 currentSubstring.append(i)
 
+                # Everytime we increase the currentSubstring, it might be possible to become a new max
                 if len(currentSubstring) > maxLength:
                     maxLength = len(currentSubstring)
             else:
-                # If the element exists, trim the current array from the element and append the new one
+                # If the element exists, slice the current array from the element and append the same char to the end
                 indexOfElement = currentSubstring.index(i)
                 currentSubstring = currentSubstring[indexOfElement+1:]
                 currentSubstring.append(i)
