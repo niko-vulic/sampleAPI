@@ -22,6 +22,7 @@ class Solution:
     def twoSum(self, nums: List[int], target: int) -> List[int]:
 
         hashMap = {}
+
         for index, element in enumerate(nums):
             elementToFind = target-element
             if elementToFind in hashMap:
