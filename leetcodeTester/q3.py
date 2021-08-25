@@ -11,19 +11,31 @@ class Solution:
     def defineTestCases(self):
         self.testCases.append("abcabc")
         self.testCases.append("bbbeeee")
+        self.testCases.append("12341234512345612345")
 
     def runTests(self):
         for case in self.testCases:
             print("Test case:" + case + ", answer is:" + str(getattr(self, self.funcName)(case)))
 
     def lengthOfLongestSubstring(self, s: str) -> int:
-        totalLength = len(s)
-        current  = []
+        # Moving sub-array problem. We use a second array to store the current, and a maxLength counter which is
+        # recalculated when the current is increased. No further variables are required
+        maxLength = 0
+        currentSubstring  = []
+
 
         for i in s:
-            pass
+            if i not in currentSubstring:
+                # If the element doesn't already exist, add it and recalc max length
+                currentSubstring.append(i)
 
-        maxLength = 0
+                if len(currentSubstring) > maxLength:
+                    maxLength = len(currentSubstring)
+            else:
+                # If the element exists, trim the current array from the element and append the new one
+                indexOfElement = currentSubstring.index(i)
+                currentSubstring = currentSubstring[indexOfElement+1:]
+                currentSubstring.append(i)
 
         return maxLength
 
