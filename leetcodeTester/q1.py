@@ -11,27 +11,26 @@ class Solution:
         self.funcName = "twoSum"
 
     def defineTestCases(self):
-        self.testCases.append([[2,3,4], 6])
-        self.testCases.append([[1,4,7,8],9])
-        #self.testCases.append("12341234512345612345")
+        self.testCases.append([[2, 3, 4], 6])
+        self.testCases.append([[1, 4, 7, 8], 9])
+        self.testCases.append([[-1, 0, 4, 7], 3])
 
     def runTests(self):
         for case in self.testCases:
             print("Test case:" + str(case) + ", answer is:" + str(getattr(self, self.funcName)(case[0], case[1])))
 
     def twoSum(self, nums: List[int], target: int) -> List[int]:
-
         hashMap = {}
 
         for index, element in enumerate(nums):
             elementToFind = target-element
             if elementToFind in hashMap:
-                #print("Found " + str(elementToFind))
-                return [hashMap[elementToFind] ,index]
+                # print("Found " + str(elementToFind))
+                return [hashMap[elementToFind], index]
             else:
-                #print("Not found, adding element:" + str(element))
+                # Add the element to the hashMap such that it can be looked up on next elements
+                # print("Not found, adding element:" + str(element))
                 hashMap[element] = index
-
 
         result = []
         return result
