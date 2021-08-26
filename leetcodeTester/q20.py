@@ -1,6 +1,8 @@
-# 3. Longest Substring Without Repeating Characters
-# Given a string s, find the length of the longest substring without repeating characters.
-
+# 20. Valid Parentheses
+# Given a string s containing just the characters '(', ')', '{', '}', '[' and ']', determine if the input string is valid.
+# An input string is valid if:
+#     Open brackets must be closed by the same type of brackets.
+#     Open brackets must be closed in the correct order.
 
 
 class Solution:
@@ -39,8 +41,7 @@ class Solution:
 
         return True if not stack else False
 
-
-    # Old saved answer from Leetcode
+    # Old saved answer from leetcode
     def isValidBackup(self, s: str) -> bool:
         openBrackets = '[{('
         mappedBrackets = {
