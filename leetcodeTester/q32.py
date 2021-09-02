@@ -37,7 +37,7 @@ class Solution:
 
         for i in range(2, len(s)):
             # Track only on closed brackets
-            print("Checking element " + str(i) + ", value:" + str(s[i]) + " of string " + s)
+            #print("Checking element " + str(i) + ", value:" + str(s[i]) + " of string " + s)
 
             if s[i] == ')':
                 # Valid parenthesis in 2 cases - either () extends sequence or )) and check prior location of )
@@ -50,7 +50,7 @@ class Solution:
                     # Check for cases of )), not caught by simple case
                     if dp_array[i-1] > 0:
                         prior_index = i - dp_array[i-1] - 1
-                        print("Case of )) for index:" + str(i) + ",checking prior index:" + str(prior_index))
+                        #print("Case of )) for index:" + str(i) + ",checking prior index:" + str(prior_index))
                         # Ensure prior_index > 0, else python wraps the array and ())( = 4
                         if prior_index >= 0 and s[prior_index] == '(':
                             current_seq = dp_array[i - 1] + 2
@@ -58,7 +58,7 @@ class Solution:
                 # In both scenarios, we check if we can append to an existing sequence
                 if current_seq > 0:
                     prior_valid_seq = i - current_seq
-                    print("Case of ))+_, summing current value:" + str(dp_array[i]) + " with prior index:" + str(prior_valid_seq))
+                    #print("Case of ))+_, summing current value:" + str(dp_array[i]) + " with prior index:" + str(prior_valid_seq))
                     # If s[1+] already has a sequence, append the count
                     if prior_valid_seq > 0:
                         dp_array[i] = current_seq + dp_array[prior_valid_seq]
@@ -68,7 +68,7 @@ class Solution:
 
                 if dp_array[i] > max_counter:
                     max_counter = dp_array[i]
-            print("Current dp array:" + str(dp_array))
+            #print("Current dp array:" + str(dp_array))
 
         return max_counter
 
