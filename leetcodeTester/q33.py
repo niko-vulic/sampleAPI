@@ -35,6 +35,69 @@ class Solution:
             print("Test case:" + str(case) + ", answer is:" + str(getattr(self, self.funcName)(case[0], case[1])))
 
     def search(self, nums: List[int], target: int) -> int:
+        # Find the pivot point where nums[i] > nums[i+1]
+        # Use binary search to cut the array until found
+
+        clone = nums
+        pos = 0
+        while len(clone) > 2:
+            mid = len(clone)//2 -1
+
+            # Check if pivot is mid, break if found, else
+            if clone[mid] > clone[mid+1]:
+                clone = [clone[mid]]
+                pos = pos + mid
+                break
+
+            # [1,2,3,4|5,6,7,0]
+            # If right[end] < right[start], then the pivot is on the right side, else left
+            # In case of right side, add the midpoint to the position
+
+            if clone[-1] < clone[mid+1]:
+                clone = clone[mid+1:]
+                pos = pos + mid + 1
+            else:
+                clone = clone[:mid+1]
+
+        itemPos = 0
+        if target >= nums[0] and target <= nums[pos]:
+            # Search in left half
+            clone = nums[:pos+1]
+            itemPos = self.binary_search(clone, target)
+            pass
+        else:
+            # Search in right half if item < start
+            clone = nums[pos+1:]
+
+            itemPos = self.binary_search(clone, target)
+            if itemPos >= 0:
+                itemPos += pos + 1
+
+        return itemPos
+
+
+    # Copied binary search code off internet
+    def binary_search(self, arr, x):
+        low = 0
+        high = len(arr) - 1
+        mid = 0
+
+        while low <= high:
+            mid = (high + low) // 2
+            # If x is greater, ignore left half
+            if arr[mid] < x:
+                low = mid + 1
+            # If x is smaller, ignore right half
+            elif arr[mid] > x:
+                high = mid - 1
+            # means x is present at mid
+            else:
+                return mid
+
+        # If we reach here, then the element was not present
+        return -1
+
+    def search_working(self, nums: List[int], target: int) -> int:
 
         # Find the pivot point where nums[i] > nums[i+1]
         # Use binary search to cut the array until found
@@ -89,26 +152,6 @@ class Solution:
         print("Pivot is:" + str(pos) + ", item at pivot:" + str(nums[pos]))
         return itemPos
 
-    # Copied binary search code off internet
-    def binary_search(self, arr, x):
-        low = 0
-        high = len(arr) - 1
-        mid = 0
-
-        while low <= high:
-            mid = (high + low) // 2
-            # If x is greater, ignore left half
-            if arr[mid] < x:
-                low = mid + 1
-            # If x is smaller, ignore right half
-            elif arr[mid] > x:
-                high = mid - 1
-            # means x is present at mid
-            else:
-                return mid
-
-        # If we reach here, then the element was not present
-        return -1
 
 if __name__ == '__main__':
     soln = Solution()
