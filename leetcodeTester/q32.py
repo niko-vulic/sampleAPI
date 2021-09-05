@@ -36,6 +36,50 @@ class Solution:
             max_counter = 2
 
         for i in range(2, len(s)):
+
+            if s[i] == ')':
+                # Valid parenthesis in 2 cases - either () extends sequence or )) and check prior location of )
+                current_seq = 0
+
+                # Simple case of ()
+                if s[i - 1] == '(':
+                    current_seq = 2
+                else:
+                    # Check for cases of (..)), not caught by simple case
+                    if dp_array[i-1] > 0:
+                        prior_index = i - dp_array[i-1] - 1
+                        # Ensure prior_index > 0, else python wraps the array and ())( = 4
+                        if prior_index >= 0 and s[prior_index] == '(':
+                            current_seq = dp_array[i - 1] + 2
+
+                # In both scenarios, we check if we can append () or (..)) to an existing valid sequence
+                if current_seq > 0:
+                    prior_valid_seq = i - current_seq
+                    # If s[1+] already has a sequence, append the count
+                    if prior_valid_seq > 0:
+                        dp_array[i] = current_seq + dp_array[prior_valid_seq]
+                    else:
+                        dp_array[i] = current_seq
+
+                # For every iteration, re-calculate the max
+                if dp_array[i] > max_counter:
+                    max_counter = dp_array[i]
+
+
+        return max_counter
+
+    def longestValidParentheses_working(self, s: str) -> int:
+
+        # Approach with DP
+        dp_array = [0] * len(s)
+        max_counter = 0
+
+        # Init the first two elements of dp array to make following code simpler
+        if len(s) >= 2 and s[0] == '(' and s[1] == ')':
+            dp_array[1] = 2
+            max_counter = 2
+
+        for i in range(2, len(s)):
             # Track only on closed brackets
             #print("Checking element " + str(i) + ", value:" + str(s[i]) + " of string " + s)
 
