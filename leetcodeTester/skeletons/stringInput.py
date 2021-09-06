@@ -13,7 +13,7 @@ class Solution:
 
     def runTests(self):
         for case in self.testCases:
-            print("Test case:" + case + ", answer is:" + str(getattr(self, self.funcName)(case)))
+            print("Test case:" + str(case) + ", answer is:" + str(getattr(self, self.funcName)(case)))
 
     def tempFuncName(self, s: str) -> int:
         return 0
