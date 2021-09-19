@@ -27,23 +27,33 @@ class Solution:
 
     def jump(self, nums: List[int]) -> int:
 
+        # To handle the edge case of 1, return 0 as no jumps are required
         if len(nums) == 1: return 0
 
+        # We use dynamic programming (tabulation) to keep a running record of the # of jumps to current position
         dp = [0] * len(nums)
         remainingInJump = 0
 
         for i in range(len(nums)):
+
+            # If nums[i] will take you farther than the remaining value in this current jump, then
+            # calculate the remaining dp[indexes] with the longer jump. Ie for i=2 in [2,3,1,1,4], for k from 4-5
             if nums[i] > remainingInJump:
+
                 tempMax = nums[i] + 1
-                tempSub = remainingInJump
-                for k in range(tempSub, tempMax):
+                tempMin = remainingInJump
+                for k in range(tempMin, tempMax):
+                    # We make sure not to overwrite an existing lower dp[] value with a higher one
                     if i + k < len(nums) and not dp[i + k]:
                         dp[i + k] = dp[i] + 1
+
+                # Reset the remaining jump counter to the new index - 1
                 remainingInJump = nums[i] - 1
             else:
+                # nums[i] <= remaining, therefore dp[i] has already been calculated and we can skip this
                 remainingInJump = remainingInJump - 1
 
-        # print(dp)
+        # Return with an offset of -1 as our array is starting a count at dp[1] = 1
         return dp[-1] - 1
 
     def jumpOld(self, nums: List[int]) -> int:
