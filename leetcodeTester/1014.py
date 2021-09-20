@@ -23,21 +23,40 @@ class Solution:
             print("Test case:" + str(case) + ", answer is:" + str(getattr(self, self.funcName)(case)))
 
     def maxScoreSightseeingPair(self, values: List[int]) -> int:
-        print(values)
 
-        valueIfI = [0] * len(values)
-        valueIfJ = [0] * len(values)
+        maxCurr = [0] * len(values)
+        maxCurr[0] = values[0]
+
+        maxValue = 0
+        prevValue = values[0]
+
+        for i in range(1, len(values)):
+
+            maxCurr[i] = max(maxCurr[i - 1], prevValue)
+            prevValue = values[i] + i
+
+            localMax = values[i] - i + maxCurr[i]
+            if localMax > maxValue:
+                maxValue = localMax
+
+
+        return maxValue
+
+    def maxScoreSightseeingPair2(self, values: List[int]) -> int:
+
+        #valueIfI = [0] * len(values)
+        #valueIfJ = [0] * len(values)
         maxCurr = [0] * len(values)
 
         maxValue = 0
 
-        valueIfI[0] = values[0]
+        #valueIfI[0] = values[0]
         maxCurr[0] = values[0]
 
         # Get the best sightseeting value first - max i + values[i]
         for i in range(1, len(values)):
-            valueIfI[i] = values[i] + i
-            valueIfJ[i] = values[i] - i
+            #valueIfI[i] = values[i] + i
+            #valueIfJ[i] = values[i] - i
             # maxCurr[i] = valueIfJ[i] + max(maxCurr[i-1], valueIfI[i-1])
             maxCurr[i] = max(maxCurr[i - 1], values[i-1] + i-1)
 
@@ -45,9 +64,9 @@ class Solution:
             if localMax > maxValue:
                 maxValue = localMax
 
-        print('Values of spots if i: ' + str(valueIfI))
-        print('Values of spots if j: ' + str(valueIfJ))
-        print('Final max is:' + str(maxValue))
+        #print('Values of spots if i: ' + str(valueIfI))
+        #print('Values of spots if j: ' + str(valueIfJ))
+        #print('Final max is:' + str(maxValue))
 
         return maxValue
 
